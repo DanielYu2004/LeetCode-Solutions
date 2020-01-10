@@ -1,39 +1,36 @@
-
-class ListNode(object):
-     def __init__(self, x):
-         self.val = x
-         self.next = None
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
 class Solution(object):
     def addTwoNumbers(self, l1, l2):
         
-        l1_list = []
-        l2_list = []
-        digits = 0
         
-        
-        def listify(linkedlist, listedlinkedlist):
-            if linkedlist.next:
-                listedlinkedlist.append(linkedlist.val)
-                global digits = global digits + 1
-                listify(linkedlist.next, listedlinkedlist)
-            else:
-                listedlinkedlist.append(linkedlist.val)
-                global digits += 1
-                print(digits)
+        def add(l1,l2, carry, prevnode):
+            if l1 or l2 or carry:
+                if l1:
+                    carry += l1.val
+                    l1next = l1.next
+                else:
+                    l1next = None
+                if l2: 
+                    carry +=l2.val
+                    l2next = l2.next
+                else:
+                    l2next = None
+                    
+                tempsum = carry % 10
+                if carry > 9:
+                    carry = 1
+                else: 
+                    carry = 0
+                prevnode.next = ListNode(tempsum)
+                add(l1next, l2next,carry, prevnode.next)
+                return()
                 
-                
-                
-        listify(l1,l1_list)
-        listify(l2,l2_list)
-
-        #print(l1_list)
-        #print(l2_list)
-
-
-
-        
-        
-
-
-        
+        temp = ListNode(None)
+        add(l1,l2, 0, temp)
+        return(temp.next)
+                    
